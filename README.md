@@ -5,7 +5,7 @@ online play is peer-to-peer (WebRTC via [PeerJS](https://peerjs.com), vendored i
 
 ## Host it free on GitHub Pages
 
-1. Create a new GitHub repo and push everything in this folder to it (`index.html` must be at the repo root).
+1. Create a new GitHub repo and push everything in this folder to it (`index.html` must be at the repo root, and every file in this folder must be next to it, so there are no subfolders).
 2. Repo → **Settings → Pages** → *Build and deployment*: **Deploy from a branch** → `main` / `/ (root)` → Save.
 3. After a minute your game is live at `https://<your-username>.github.io/<repo-name>/`.
 
@@ -24,14 +24,15 @@ You can also just double-click `index.html` to play same-screen locally.
 * Fast serves earn tips, back-to-back serves build a streak multiplier.
 
 The longer you survive, the more tickets arrive at once, the faster they come, and new bigger recipes
-unlock (Salad → Cheeseburger → … → Double Deluxe). It scales slightly with player count.
+unlock (Salad → Cheeseburger → … → Double Deluxe). It scales with player count (more chefs = proportionally more orders).
 
 ## Campaign: 20 levels
 
 Pick a level with **Change** on the menu (local) or in the lobby (online host). Each level has a fixed clock and
 a **1–3 star** rating based on your team's score. Score for one star to unlock the next level (progress is saved in
-your browser; there's an *Unlock all levels* checkbox if you'd rather jump around). Star targets automatically
-scale with the number of players, and so does how fast orders arrive.
+your browser; there's an *Unlock all levels* checkbox if you'd rather jump around). Difficulty is balanced **per person**: levels are tuned for 2 chefs, and with
+1–4 players the order rate, the number of tickets on the board, the plates in circulation and the star targets all scale
+with the player count, so each chef faces roughly the same workload (4 players get twice the orders of 2).
 
 | # | Level | What's new |
 |---|---|---|
@@ -59,7 +60,7 @@ scale with the number of players, and so does how fast orders arrive.
 The two **Endless** modes are still there: *Survival* (3 lives, orders escalate forever) and *Timed* (5:00).
 
 Difficulty and star targets are estimates from a workload model, not extensive playtesting. If a level feels too
-easy or too hard, tweak `iv` (seconds between orders) or `stars` for that level in `js/levels.js`.
+easy or too hard, tweak `iv` (seconds between orders) or `stars` for that level in `levels.js`.
 
 ### Same-screen controls
 
@@ -80,24 +81,24 @@ presses. PeerJS's free public broker is only used for the initial handshake. Tha
 * The **host must keep their tab open and visible** (background tabs get throttled by browsers).
 * Some strict networks (corporate Wi-Fi, some mobile carriers) block peer-to-peer. If a friend can't
   connect, try another network or have them host.
-* If you ever want rock-solid connectivity, add a TURN server to `Net.peerOpts()` in `js/net.js`,
+* If you ever want rock-solid connectivity, add a TURN server to `Net.peerOpts()` in `net.js`,
   or self-host a [PeerJS server](https://github.com/peers/peerjs-server).
 
 ## Tweaking the game
 
-Global balance numbers live at the top of `js/sim.js` (`T`: speeds, chop/cook times; `RECIPES`). Each campaign level
-is a block in `js/levels.js`: the kitchen layout is an array of 9 strings (legend at the top of that file), plus its
+Global balance numbers live at the top of `sim.js` (`T`: speeds, chop/cook times; `RECIPES`). Each campaign level
+is a block in `levels.js`: the kitchen layout is an array of 9 strings (legend at the top of that file), plus its
 order schedule, timer, hints and per-level overrides. Copy one to make your own level.
 
 ## Files
 
 ```
 index.html, style.css      UI
-js/sim.js                  game rules + simulation (runs on host / locally)
-js/levels.js               the 20 campaign levels
-js/render.js               canvas drawing
-js/input.js, audio.js      keyboard/gamepad, synthesized sound
-js/net.js                  PeerJS wrapper
-js/main.js                 menus, lobby, game loop
-js/peerjs.min.js           PeerJS 1.5.5 (MIT)
+sim.js                  game rules + simulation (runs on host / locally)
+levels.js               the 20 campaign levels
+render.js               canvas drawing
+input.js, audio.js      keyboard/gamepad, synthesized sound
+net.js                  PeerJS wrapper
+main.js                 menus, lobby, game loop
+peerjs.min.js           PeerJS 1.5.5 (MIT)
 ```

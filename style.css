@@ -86,7 +86,7 @@ summary { cursor: pointer; font-weight: 700; color: var(--ink); }
 #pickEndless { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 @media (max-width: 760px) { #pickGrid { grid-template-columns: repeat(3, 1fr); } }
 .card { background: #3a2b1d; border: 2px solid #4a3826; border-radius: 10px; padding: 8px; text-align: left; display: flex; flex-direction: column; gap: 4px; color: var(--ink); }
-.card canvas { width: 100%; height: auto; border-radius: 4px; image-rendering: pixelated; display: block; }
+.card canvas { width: 100%; height: auto; border-radius: 4px; display: block; }
 .card .cn { font-size: 12.5px; font-weight: 700; line-height: 1.2; min-height: 30px; }
 .card .cs { font-size: 12px; color: #7d6b52; letter-spacing: 2px; }
 .card .cs.got { color: #ffd23f; }
@@ -122,3 +122,16 @@ body:has(#cd.show) #brief { top: 28%; }
 #tip { min-height: 34px; max-width: min(96vw, 940px); padding: 6px 16px; border-radius: 17px; font-weight: 700; font-size: 14px; text-align: center; line-height: 22px;
   color: var(--ink); background: rgba(242,163,58,.16); border: 2px solid transparent; opacity: 0; transition: opacity .3s; }
 #tip.show { opacity: 1; border-color: var(--accent); }
+
+/* picker: always keep the info + Select button on screen, scroll only the level grid */
+#picker .panel { display: flex; flex-direction: column; max-height: calc(100vh - 32px); padding: 18px 22px; }
+#pickScroll { overflow-y: auto; flex: 1 1 auto; min-height: 120px; padding-right: 4px; }
+#pickInfo { flex: none; min-height: 0; margin: 10px 0 6px; padding: 8px 14px; }
+.pickfoot { flex: none; }
+.card canvas { max-width: 96px; margin: 0 auto; }
+.card .cn { min-height: 0; }
+.card.locked { cursor: pointer; }
+#pickInfo .lockmsg { color: #ff9d8d; font-weight: 700; }
+#loaderr { position: fixed; inset: 0; z-index: 99; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px;
+  background: #1b140e; color: #fbf3df; font-size: 17px; line-height: 1.6; }
+#loaderr.hidden { display: none; }

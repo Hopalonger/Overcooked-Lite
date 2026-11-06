@@ -91,11 +91,15 @@
 <div id="picker" class="overlay hidden">
   <div class="panel wide">
     <h2>Choose a level</h2>
-    <div id="pickGrid"></div>
-    <div id="pickEndless"></div>
+    <div id="pickScroll">
+      <div id="pickGrid"></div>
+      <div id="pickEndless"></div>
+    </div>
     <div id="pickInfo"></div>
-    <label class="check"><input type="checkbox" id="pickAll"> Unlock all levels</label>
-    <div class="pickbtns"><button id="pickBack" class="ghost">Back</button><button id="pickOk" class="primary">Select</button></div>
+    <div class="pickfoot">
+      <label class="check"><input type="checkbox" id="pickAll"> Unlock all levels</label>
+      <div class="pickbtns"><button id="pickBack" class="ghost">Back</button><button id="pickOk" class="primary">Select</button></div>
+    </div>
   </div>
 </div>
 
@@ -119,13 +123,27 @@
   </div>
 </div>
 
-<script src="js/peerjs.min.js"></script>
-<script src="js/sim.js"></script>
-<script src="js/levels.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/render.js"></script>
-<script src="js/input.js"></script>
-<script src="js/net.js"></script>
-<script src="js/main.js"></script>
+<script src="peerjs.min.js"></script>
+<script src="sim.js"></script>
+<script src="levels.js"></script>
+<script src="audio.js"></script>
+<script src="render.js"></script>
+<script src="input.js"></script>
+<script src="net.js"></script>
+<script src="main.js"></script>
+<div id="loaderr" class="hidden"></div>
+<script>
+  // If a script failed to load (e.g. a file wasn't uploaded next to index.html) say so instead of a dead page.
+  (function () {
+    var need = ['Peer', 'Sim', 'LEVELS', 'Renderer', 'Input', 'Net', 'App'], miss = [];
+    need.forEach(function (n) { try { if (typeof eval(n) === 'undefined') miss.push(n); } catch (e) { miss.push(n); } });
+    if (miss.length) {
+      var el = document.getElementById('loaderr');
+      el.className = '';
+      el.innerHTML = '<b>Some game files did not load.</b><br>Make sure these files are all in the same folder as index.html: ' +
+        'peerjs.min.js, sim.js, levels.js, audio.js, render.js, input.js, net.js, main.js, style.css.<br>(missing: ' + miss.join(', ') + ')';
+    }
+  })();
+</script>
 </body>
 </html>
