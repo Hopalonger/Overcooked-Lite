@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overcooked Lite</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game"></canvas>
+  <div id="tip"></div>
+  <div id="hint" class="hidden"></div>
+</div>
+
+<div id="cd"></div>
+<button id="mute" title="Mute (M)">🔊</button>
+<div id="toast"></div>
+
+<!-- MENU -->
+<div id="menu" class="overlay">
+  <div class="panel">
+    <h1>🍔 Overcooked <span>Lite</span></h1>
+    <p class="tag">Serve as many orders as you can. The orders get harder. The kitchen doesn't get bigger.</p>
+
+    <label class="field">Your name
+      <input id="name" maxlength="10" placeholder="Chef" autocomplete="off">
+    </label>
+
+    <div class="cols">
+      <section>
+        <h2>Play online</h2>
+        <button id="btnHost" class="primary">Host a room</button>
+        <div class="joinrow">
+          <input id="joinCode" maxlength="4" placeholder="CODE" autocomplete="off" spellcheck="false">
+          <button id="btnJoin">Join</button>
+        </div>
+        <p class="small">Host shares the 4-letter code (or a link). 2–4 players, one per browser.</p>
+      </section>
+      <section>
+        <h2>Same screen</h2>
+        <label class="field inline">Players
+          <select id="localCount">
+            <option value="1">1</option><option value="2" selected>2</option>
+            <option value="3">3</option><option value="4">4 (needs gamepad)</option>
+          </select>
+        </label>
+        <div class="levelbox">
+          <div><div class="small">Level <span id="menuProg" class="prog"></span></div><b id="menuLevelName"></b></div>
+          <button id="btnMenuLevel">Change</button>
+        </div>
+        <button id="btnLocal">Start local game</button>
+        <p class="small">Players 1–3 share the keyboard; any player can use a gamepad.</p>
+      </section>
+    </div>
+
+    <details>
+      <summary>How to play</summary>
+      <ul class="how">
+        <li><b>Grab</b> ingredients from the crates along the top wall. <b>Space / Q</b> picks up or puts down whatever you're facing.</li>
+        <li><b>Chop</b> lettuce &amp; tomato on a chopping board — hold <b>E</b>.</li>
+        <li><b>Cook</b> patties on a stove (left wall). Don't let them burn!</li>
+        <li><b>Plate</b> it: grab a plate from the rack, then pick up the ingredients onto it. Match the ticket and hit <b>SERVE</b>.</li>
+        <li><b>Wash</b> dirty plates at the sink (hold <b>E</b>) — you only have a few plates.</li>
+        <li><b>Shift</b> to dash. Fast serves earn tips; streaks multiply points.</li>
+        <li>Orders pile up faster and recipes get bigger as the clock runs.</li>
+      </ul>
+    </details>
+  </div>
+</div>
+
+<!-- LOBBY -->
+<div id="lobby" class="overlay hidden">
+  <div class="panel narrow">
+    <h2>Room code</h2>
+    <div id="lobbyCode">----</div>
+    <div class="linkrow"><span id="lobbyUrl"></span><button id="btnCopy">Copy link</button></div>
+    <ul id="players"></ul>
+    <div class="levelbox">
+      <div><b id="lobbyLevelName"></b><div id="lobbyLevelBlurb" class="small"></div></div>
+      <button id="btnLobbyLevel">Change</button>
+    </div>
+    <button id="btnStart" class="primary">Start cooking!</button>
+    <p id="lobbyWait" class="small hidden">Waiting for the host to start…</p>
+    <button id="btnLeave" class="ghost">Leave</button>
+  </div>
+</div>
+
+<!-- LEVEL PICKER -->
+<div id="picker" class="overlay hidden">
+  <div class="panel wide">
+    <h2>Choose a level</h2>
+    <div id="pickGrid"></div>
+    <div id="pickEndless"></div>
+    <div id="pickInfo"></div>
+    <label class="check"><input type="checkbox" id="pickAll"> Unlock all levels</label>
+    <div class="pickbtns"><button id="pickBack" class="ghost">Back</button><button id="pickOk" class="primary">Select</button></div>
+  </div>
+</div>
+
+<div id="brief" class="hidden"></div>
+
+<!-- GAME OVER -->
+<div id="over" class="overlay hidden">
+  <div class="panel narrow">
+    <h2 id="overTitle">Kitchen shut down!</h2>
+    <div id="overStats"></div>
+    <p id="overNote" class="note"></p>
+    <div id="overHost">
+      <button id="btnNext" class="primary hidden">Next level →</button>
+      <button id="btnAgain" class="primary">Play again</button>
+      <button id="btnLobby" class="ghost">Back to lobby</button>
+    </div>
+    <div id="overClient" class="hidden">
+      <p class="small">Waiting for the host…</p>
+      <button id="btnLeave2" class="ghost">Leave</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/peerjs.min.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/render.js"></script>
+<script src="js/input.js"></script>
+<script src="js/net.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
